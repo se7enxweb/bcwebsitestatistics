@@ -185,10 +185,10 @@ class BCWebsiteStatisticsOperators
           }
 	  else
           {
-               $ret .= "\n".'<script src="'. "$script_url". '" type="text/javascript"></script>'."\n";
+               $ret .= "\n".'<script src="'. "$script_url". '"></script>'."\n";
           }
 
-          $ret .= '<script type="text/javascript" language="Javascript">';
+          $ret .= '<script>';
           $ret .= "  window.dataLayer = window.dataLayer || [];";
           $ret .= "  function gtag(){dataLayer.push(arguments);}";
           $ret .= "  gtag('js', new Date());";
