@@ -177,20 +177,20 @@
     </div>
     <div id="searchbox">
       <form action={"/content/search"|ezurl}>
-        <label for="searchtext" class="hide">Search text:</label>
+        <label for="searchtext" class="hide">{'Search text:'|i18n( 'design/ezwebin/pagelayout' )}</label>
         {if eq( $ui_context, 'edit' )}
         <input id="searchtext" name="SearchText" type="text" value="" size="12" disabled="disabled" />
-        <input id="searchbutton" class="button-disabled" type="submit" value="{'Search'|i18n('design/ezwebin/pagelayout')}" alt="Submit" disabled="disabled" />
+        <input id="searchbutton" class="button-disabled" type="submit" value="{'Search'|i18n('design/ezwebin/pagelayout')}" alt="{'Submit'|i18n( 'design/ezwebin/pagelayout' )}" disabled="disabled" />
         {else}
         <input id="searchtext" name="SearchText" type="text" value="" size="12" />
-        <input id="searchbutton" class="button" type="submit" value="{'Search'|i18n('design/ezwebin/pagelayout')}" alt="Submit" />
+        <input id="searchbutton" class="button" type="submit" value="{'Search'|i18n('design/ezwebin/pagelayout')}" alt="{'Submit'|i18n( 'design/ezwebin/pagelayout' )}" />
             {if eq( $ui_context, 'browse' )}
              <input name="Mode" type="hidden" value="browse" />
             {/if}
         {/if}
       </form>
     </div>
-    <p class="hide"><a href="#main">Skip to main content</a></p>
+    <p class="hide"><a href="#main">{'Skip to main content'|i18n( 'design/ezwebin/pagelayout' )}</a></p>
   </div>
   <!-- Header area: END -->
 

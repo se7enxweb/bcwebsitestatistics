@@ -114,10 +114,10 @@
     {"Summary"|i18n("design/ezwebin/shop/orderview")}:
     </th>
     <th>
-    Total ex. VAT
+    {'Total ex. VAT'|i18n( 'design/ezwebin/shop/orderview' )}
     </th>
     <th>
-    Total inc. VAT
+    {'Total inc. VAT'|i18n( 'design/ezwebin/shop/orderview' )}
     </th>
 </tr>
 <tr class="bglight">
@@ -162,8 +162,8 @@
 <h3>{"Order history"|i18n("design/ezwebin/shop/orderview")}:</h3>
 <table class="list" cellspacing="0" cellpadding="0" border="0">
 <tr>
-	<th>Date</th>
-	<th>Order status</th>
+	<th>{'Date'|i18n( 'design/ezwebin/shop/orderview' )}</th>
+	<th>{'Order status'|i18n( 'design/ezwebin/shop/orderview' )}</th>
 </tr>
 {let order_status_history=fetch( shop, order_status_history,
                                  hash( 'order_id', $order.order_nr ) )}

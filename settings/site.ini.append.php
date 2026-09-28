@@ -4,4 +4,7 @@
 AutoloadPathList[]=extension/bcwebsitestatistics/autoloads/
 ExtensionRepositories[]=bcwebsitestatistics
 
+[RegionalSettings]
+TranslationExtensions[]=bcwebsitestatistics
+
 */ ?>
