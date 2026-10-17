@@ -50,6 +50,14 @@ BC Website Statistics extension USAGE
 
      - bc_ga_urchin - Place the template operator '{'false'|bc_ga_urchin()}' as the last element before the string '</head>'.
 
+       It prints the Google tag and a script file (javascript/bcwebsitestatistics_gtag.js) that reads the account from its
+       data-bc-ga-id attribute, without inline code, so the page works under a Content Security Policy without
+       'unsafe-inline' (allow https://www.googletagmanager.com in script-src and connect-src for the tag itself).
+
+     - bc_ga_script_url - '{$code|bc_ga_script_url()}' is the URL of a script file with the given code (stored once in
+       the public cache), for code that comes from content, such as a footer script: print it as
+       <script src="{$code|bc_ga_script_url()}"></script> instead of an inline script.
+
 2.1.5 Review
       ------
 

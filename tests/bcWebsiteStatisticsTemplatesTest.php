@@ -7,6 +7,8 @@
  *
  *  WS-01 - No template has an event handler attribute, a javascript: URL or a call of the retired urchinTracker()
  *  WS-02 - The binary file view still links each file to content/download, with the file name escaped
+ *  WS-03 - No template has an inline script; the footer script of the analytics pagelayout is a file (bc_ga_script_url())
+ *  WS-04 - bc_ga_urchin() prints the gtag configuration as a file with the account in data-bc-ga-id
  *
  * @copyright Copyright (C) 1998 - 2026 7x & Exponential Foundation. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
@@ -50,6 +52,30 @@ class bcWebsiteStatisticsTemplatesTest extends TestCase
             $this->assertStringNotContainsStringIgnoringCase( 'javascript:', $source, $path );
             $this->assertStringNotContainsString( 'urchinTracker(', $source, $path );
         }
+    }
+
+    /** WS-03 */
+    public function testNoInlineScript()
+    {
+        foreach ( self::templates() as $path )
+        {
+            $this->assertDoesNotMatchRegularExpression( '/<script\b(?![^>]*\bsrc=)[^>]*>/i', self::source( $path ), $path );
+        }
+        $this->assertStringContainsString( '|bc_ga_script_url()}', self::source( dirname( __DIR__ ) . '/design/standard/templates/pagelayout_analytics.tpl' ) );
+    }
+
+    /** WS-04 */
+    public function testAnalyticsSnippetIsAFileWithTheAccountInAnAttribute()
+    {
+        $operators = (string)file_get_contents( dirname( __DIR__ ) . '/autoloads/bcwebsitestatisticsoperators.php' );
+        $this->assertStringNotContainsString( "'<script>'", $operators );
+        $this->assertStringContainsString( "'javascript/bcwebsitestatistics_gtag.js'", $operators );
+        $this->assertStringContainsString( 'data-bc-ga-id="', $operators );
+        $script = (string)file_get_contents( dirname( __DIR__ ) . '/design/standard/javascript/bcwebsitestatistics_gtag.js' );
+        $this->assertStringContainsString( "getAttribute( 'data-bc-ga-id' )", $script );
+        $this->assertStringContainsString( "window.gtag( 'config', id", $script );
+        $autoload = (string)file_get_contents( dirname( __DIR__ ) . '/autoloads/eztemplateautoload.php' );
+        $this->assertStringContainsString( "'bc_ga_script_url'", $autoload );
     }
 
     /** WS-02 */

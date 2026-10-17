@@ -282,14 +282,11 @@
 </div>
 <!-- Complete page area: END -->
 
+{* The footer script of the design object is a file (bc_ga_script_url()), not an inline script *}
 {if $pagedesign.data_map.footer_script.has_content}
-<script language="javascript" type="text/javascript">
-<!--
-
-    {$pagedesign.data_map.footer_script.content}
-
--->
-</script>
+    {def $bc_footer_script_url = $pagedesign.data_map.footer_script.content|bc_ga_script_url()}
+    {if $bc_footer_script_url}<script type="text/javascript" src="{$bc_footer_script_url}"></script>{/if}
+    {undef $bc_footer_script_url}
 {/if}
 {/cache-block}
 

@@ -38,7 +38,7 @@ class BCWebsiteStatisticsOperators
     */
     function __construct()
     {
-        $this->Operators = array( 'bc_ga_urchin', 'bc_ga_urchinOrder', 'bc_ga_xmlAttributeValue', 'bc_ga_jsEscapedString', 'bc_ga_formatNumericDecimal' );
+        $this->Operators = array( 'bc_ga_urchin', 'bc_ga_urchinOrder', 'bc_ga_xmlAttributeValue', 'bc_ga_jsEscapedString', 'bc_ga_formatNumericDecimal', 'bc_ga_script_url' );
         $this->Debug = false;
     }
 
@@ -110,7 +110,13 @@ class BCWebsiteStatisticsOperators
         {
             case 'bc_ga_urchin':
             {
-                $operatorValue = $this->bc_ga_urchin( );
+                $operatorValue = $this->bc_ga_urchin( $tpl );
+            }
+            break;
+
+            case 'bc_ga_script_url':
+            {
+                $operatorValue = $this->bc_ga_script_url( $operatorValue );
             }
             break;
 
@@ -152,7 +158,7 @@ class BCWebsiteStatisticsOperators
      * \code {'false'|bc_ga_urchin()}
      * \endcode
     */
-    function bc_ga_urchin()
+    function bc_ga_urchin( $tpl = null )
     {
         // Settings
         $siteaccessSpecificInIFile = new BCUsingOWMultisiteIni();
@@ -188,17 +194,15 @@ class BCWebsiteStatisticsOperators
                $ret .= "\n".'<script src="'. "$script_url". '"></script>'."\n";
           }
 
-          $ret .= '<script>';
-          $ret .= "  window.dataLayer = window.dataLayer || [];";
-          $ret .= "  function gtag(){dataLayer.push(arguments);}";
-          $ret .= "  gtag('js', new Date());";
-          $ret .= "  gtag('config', '". $uacct ."', { cookie_flags: 'SameSite=None;Secure' } );";
-
+          // gtag() and its configuration are a file (javascript/bcwebsitestatistics_gtag.js) that reads the account
+          // and the host name from its data attributes, so the page needs no inline script
+          $ret .= '<script src="' . eZURLOperator::eZDesign( $tpl, 'javascript/bcwebsitestatistics_gtag.js', 'bc_ga_urchin' ) . '"'
+                . ' data-bc-ga-id="' . htmlspecialchars( $uacct, ENT_QUOTES, 'UTF-8' ) . '"';
           if ( $udn != 'disabled' )
           {
-            $ret .= '_udn = "'. $udn .'";';
+            $ret .= ' data-bc-ga-udn="' . htmlspecialchars( $udn, ENT_QUOTES, 'UTF-8' ) . '"';
           }
-          $ret .= '</script>';
+          $ret .= '></script>';
         }
 
         // Checks
@@ -425,6 +429,42 @@ class BCWebsiteStatisticsOperators
             ezDebug::writeNotice( $ret, 'bc_ga_urchinOrder:ret' ); */
 
         return $ret;
+    }
+
+    /*!
+     * \public
+     * \brief The URL of a script file with the given code, for code that comes from content (such as the footer script
+     * of the site's design object) and was printed into the page inline before. A page then needs no inline script,
+     * so it works under a Content Security Policy without 'unsafe-inline'.
+     * The file is named after a hash of the code, in the public cache directory beside ezjscore's packed files, and
+     * written once: the same code gives the same URL. Uses ezjscore's own generatedContentURL() where the
+     * installation has it.
+     * \return string the URL, HTML-escaped, or false for empty code or when the file cannot be stored
+     * A typical usage:
+     * \code <script src="{$code|bc_ga_script_url()}"></script>
+     * \endcode
+    */
+    function bc_ga_script_url( $code )
+    {
+        if ( !is_string( $code ) || trim( $code ) === '' )
+        {
+            return false;
+        }
+        if ( class_exists( 'ezjscPacker' ) && method_exists( 'ezjscPacker', 'generatedContentURL' ) )
+        {
+            return ezjscPacker::generatedContentURL( $code, '.js' );
+        }
+        $path = eZSys::cacheDirectory() . '/public/javascript/bcwebsitestatistics_' . md5( $code ) . '.js';
+        $handler = eZClusterFileHandler::instance( $path );
+        if ( !$handler->fileExists( $path ) )
+        {
+            $handler->fileStoreContents( $path, $code, 'bcwebsitestatistics', 'text/javascript' );
+            if ( !$handler->fileExists( $path ) )
+            {
+                return false;
+            }
+        }
+        return htmlspecialchars( eZSys::wwwDir() . '/' . $path, ENT_COMPAT, 'UTF-8' );
     }
 
     /// \privatesection
