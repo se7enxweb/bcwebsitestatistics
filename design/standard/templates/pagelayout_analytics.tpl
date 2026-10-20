@@ -37,8 +37,6 @@
     @import url({"stylesheets/pagelayout.css"|ezdesign(no)});
     @import url({"stylesheets/content.css"|ezdesign(no)});
     @import url({"stylesheets/websitetoolbar.css"|ezdesign(no)});
-    @import url({ezini('StylesheetSettings','ClassesCSS','design.ini')|ezroot(no)});
-    @import url({ezini('StylesheetSettings','SiteCSS','design.ini')|ezroot(no)});
     {foreach ezini( 'StylesheetSettings', 'CSSFileList', 'design.ini' ) as $css_file}
     @import url({concat( 'stylesheets/', $css_file )|ezdesign});
     {/foreach}
