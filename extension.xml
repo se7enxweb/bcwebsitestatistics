@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<software>
+    <metadata>
+        <name>BC Website Statistics</name>
+        <version>1.0.14</version>
+        <copyright>Copyright (C) 2001 - 2023 Brookins Consulting</copyright>
+        <license>GNU General Public License v2.0 (or any later version)</license>
+        <info_url>https://github.com/se7enxweb/bcwebsitestatistics</info_url>
+    </metadata>
+</software>
