@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Confirm order</source>
-        <translation>Potwierdź zamówienie</translation>
+        <translation>Potwierdzić zamówienie</translation>
     </message>
     <message>
         <source>Confirmation</source>
@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Review order receipt</source>
-        <translation>Sprawdź potwierdzenie zamówienia</translation>
+        <translation>Sprawdzić potwierdzenie zamówienia</translation>
     </message>
 </context>
 <context>
@@ -115,7 +115,7 @@
     <name>design/base/shop</name>
     <message>
         <source>View Order Reciept</source>
-        <translation>Wyświetl potwierdzenie zamówienia</translation>
+        <translation>Wyświetlić potwierdzenie zamówienia</translation>
     </message>
 </context>
 <context>
@@ -133,11 +133,11 @@
     </message>
     <message>
         <source>Search</source>
-        <translation>Wyszukaj</translation>
+        <translation>Wyszukać</translation>
     </message>
     <message>
         <source>Submit</source>
-        <translation>Wyślij</translation>
+        <translation>Wysłać</translation>
     </message>
     <message>
         <source>Skip to main content</source>
