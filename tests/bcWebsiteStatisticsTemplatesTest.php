@@ -10,7 +10,7 @@
  *  WS-03 - No template has an inline script; the footer script of the analytics pagelayout is a file (bc_ga_script_url())
  *  WS-04 - bc_ga_urchin() prints the gtag configuration as a file with the account in data-bc-ga-id
  *
- * @copyright Copyright (C) 1998 - 2026 7x & Exponential Foundation. All rights reserved.
+ * @copyright Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  * @package tests
  */
